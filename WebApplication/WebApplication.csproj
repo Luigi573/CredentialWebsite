@@ -34,8 +34,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="PageModel\" />
-    <Folder Include="Pages\Students\" />
     <Folder Include="wwwroot\photos\" />
   </ItemGroup>
 

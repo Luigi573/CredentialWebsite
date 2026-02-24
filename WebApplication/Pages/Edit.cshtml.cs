@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplication.Data;
 
-namespace WebApplication.Pages.Students
+namespace WebApplication.Pages
 {
     public class EditModel : PageModel
     {
