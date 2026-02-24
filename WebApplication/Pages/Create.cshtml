@@ -1,0 +1,89 @@
+﻿@page
+@model WebApplication.Pages.Students.CreateModel
+
+        @{
+        ViewData["Title"] = "Create";
+        }
+        
+        <h1>Create</h1>
+        
+    <h4>Student</h4>
+    <hr />
+    <div class="row">
+    <div class="col-md-4">
+    <form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Student.Name" class="control-label"></label>
+                <input asp-for="Student.Name" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Student.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Student.FamilyName" class="control-label"></label>
+                <input asp-for="Student.FamilyName" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Student.FamilyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Student.CURP" class="control-label"></label>
+                <input asp-for="Student.CURP" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Student.CURP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Student.SchoolPeriod" class="control-label"></label>
+                <input asp-for="Student.SchoolPeriod" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Student.SchoolPeriod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Student.Semester" class="control-label"></label>
+                <input asp-for="Student.Semester" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Student.Semester" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.IsActive" class="control-label"></label>
+                <input asp-for="Student.IsActive" class="form-control" />
+                <span asp-validation-for="Student.IsActive" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.NSS" class="control-label"></label>
+                <input asp-for="Student.NSS" class="form-control" />
+                <span asp-validation-for="Student.NSS" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.BloodType" class="control-label"></label>
+                <input asp-for="Student.BloodType" class="form-control" />
+                <span asp-validation-for="Student.BloodType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.TutorName" class="control-label"></label>
+                <input asp-for="Student.TutorName" class="form-control" />
+                <span asp-validation-for="Student.TutorName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.TutorPhone" class="control-label"></label>
+                <input asp-for="Student.TutorPhone" class="form-control" />
+                <span asp-validation-for="Student.TutorPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.ProfilePictureUrl" class="control-label"></label>
+                <input asp-for="Student.ProfilePictureUrl" class="form-control" />
+                <span asp-validation-for="Student.ProfilePictureUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
