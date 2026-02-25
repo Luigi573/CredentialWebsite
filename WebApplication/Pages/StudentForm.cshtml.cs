@@ -6,9 +6,9 @@ namespace WebApplication.Pages
 {
     public class StudentFormModel : PageModel
     {
-        private readonly WebApplication.Data.AppDbContext _context;
+        private readonly AppDbContext _context;
 
-        public StudentFormModel(WebApplication.Data.AppDbContext context)
+        public StudentFormModel(AppDbContext context)
         {
             _context = context;
         }

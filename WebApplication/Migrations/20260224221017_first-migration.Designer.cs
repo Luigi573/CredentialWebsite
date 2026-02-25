@@ -10,7 +10,7 @@ using WebApplication.Data;
 namespace WebApplication.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260223173443_first-migration")]
+    [Migration("20260224221017_first-migration")]
     partial class firstmigration
     {
         /// <inheritdoc />
@@ -63,7 +63,7 @@ namespace WebApplication.Migrations
                         .HasColumnType("varchar(50)")
                         .HasColumnName("apellidos");
 
-                    b.Property<bool?>("IsActive")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)")
                         .HasColumnName("activo");
 

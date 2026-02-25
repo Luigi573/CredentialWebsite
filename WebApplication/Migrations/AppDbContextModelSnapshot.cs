@@ -60,7 +60,7 @@ namespace WebApplication.Migrations
                         .HasColumnType("varchar(50)")
                         .HasColumnName("apellidos");
 
-                    b.Property<bool?>("IsActive")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)")
                         .HasColumnName("activo");
 

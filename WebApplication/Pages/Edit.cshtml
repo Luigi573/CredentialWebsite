@@ -9,82 +9,75 @@
 
 <h4>Student</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Student.Id" />
-            <div class="form-group">
-<span class="text-danger">*</span>
-                <label asp-for="Student.Name" class="control-label"></label>
-                <input asp-for="Student.Name" class="form-control" aria-required="true"/>
-                <span asp-validation-for="Student.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-<span class="text-danger">*</span>
-                <label asp-for="Student.FamilyName" class="control-label"></label>
-                <input asp-for="Student.FamilyName" class="form-control" aria-required="true"/>
-                <span asp-validation-for="Student.FamilyName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-<span class="text-danger">*</span>
-                <label asp-for="Student.CURP" class="control-label"></label>
-                <input asp-for="Student.CURP" class="form-control" aria-required="true"/>
-                <span asp-validation-for="Student.CURP" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-<span class="text-danger">*</span>
-                <label asp-for="Student.SchoolPeriod" class="control-label"></label>
-                <input asp-for="Student.SchoolPeriod" class="form-control" aria-required="true"/>
-                <span asp-validation-for="Student.SchoolPeriod" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-<span class="text-danger">*</span>
-                <label asp-for="Student.Semester" class="control-label"></label>
-                <input asp-for="Student.Semester" class="form-control" aria-required="true"/>
-                <span asp-validation-for="Student.Semester" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Student.IsActive" class="control-label"></label>
-                <input asp-for="Student.IsActive" class="form-control" />
-                <span asp-validation-for="Student.IsActive" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Student.NSS" class="control-label"></label>
-                <input asp-for="Student.NSS" class="form-control" />
-                <span asp-validation-for="Student.NSS" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Student.BloodType" class="control-label"></label>
-                <input asp-for="Student.BloodType" class="form-control" />
-                <span asp-validation-for="Student.BloodType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Student.TutorName" class="control-label"></label>
-                <input asp-for="Student.TutorName" class="form-control" />
-                <span asp-validation-for="Student.TutorName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Student.TutorPhone" class="control-label"></label>
-                <input asp-for="Student.TutorPhone" class="form-control" />
-                <span asp-validation-for="Student.TutorPhone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Student.ProfilePictureUrl" class="control-label"></label>
-                <input asp-for="Student.ProfilePictureUrl" class="form-control" />
-                <span asp-validation-for="Student.ProfilePictureUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<form method="post" enctype="multipart/form-data">
+    <div class="form-group row row-cols-3 align-items-center">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col">
+            <label asp-for="Student.Name" class="form-label"></label>
+            <input asp-for="Student.Name" class="form-control" />
+            <span asp-validation-for="Student.Name" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <label asp-for="Student.FamilyName" class="form-label"></label>
+            <input asp-for="Student.FamilyName" class="form-control" />
+            <span asp-validation-for="Student.FamilyName" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <label asp-for="Student.CURP" class="form-label"></label>
+            <input asp-for="Student.CURP" class="form-control" />
+            <span asp-validation-for="Student.CURP" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <label asp-for="Student.SchoolPeriod" class="form-label"></label>
+            <input asp-for="Student.SchoolPeriod" class="form-control" />
+            <span asp-validation-for="Student.SchoolPeriod" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <label asp-for="Student.Semester" class="form-label"></label>
+            <select asp-for="Student.Semester" class="form-control">
+                <option value="" disabled selected>--Selecionar Semestre--</option>
+                <option value="1">1er Semestre</option>
+                <option value="2">2do Semestre</option>
+                <option value="3">3er Semestre</option>
+                <option value="4">4to Semestre</option>
+                <option value="5">5to Semestre</option>
+                <option value="6">6to Semestre</option>
+            </select>
+            <span asp-validation-for="Student.Semester" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <label asp-for="Student.NSS" class="form-label"></label>
+            <input asp-for="Student.NSS" class="form-control" />
+            <span asp-validation-for="Student.NSS" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <label asp-for="Student.BloodType" class="form-label"></label>
+            <input asp-for="Student.BloodType" class="form-control" />
+            <span asp-validation-for="Student.BloodType" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <label asp-for="Student.TutorName" class="form-label"></label>
+            <input asp-for="Student.TutorName" class="form-control" />
+            <span asp-validation-for="Student.TutorName" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <label asp-for="Student.TutorPhone" class="form-label"></label>
+            <input asp-for="Student.TutorPhone" class="form-control" />
+            <span asp-validation-for="Student.TutorPhone" class="text-danger"></span>
+        </div>
     </div>
-</div>
+    <div class="row mx-auto mt-3 w-25 h-25">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" id="photo_preview" class="img-thumbnail mb-2" />
+        <input type="file" name="studentPhoto" id="photo_uploader" accept=".png, .jpg" />
+        <button id="submit_button" class="btn btn-primary mt-3" type="submit">Submit</button>
+    </div>
+</form>
 
 <div>
     <a asp-page="./Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/ImageUploading.js"></script>
 }
