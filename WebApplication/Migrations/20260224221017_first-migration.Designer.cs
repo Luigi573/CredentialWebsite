@@ -10,8 +10,8 @@ using WebApplication.Data;
 namespace WebApplication.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260225031954_First-Migration")]
-    partial class FirstMigration
+    [Migration("20260224221017_first-migration")]
+    partial class firstmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

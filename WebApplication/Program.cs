@@ -1,7 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using WebApplication.Data;
-using WebApplication.Areas.Identity.Data;
 
 var builder = Microsoft.AspNetCore.Builder.WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -9,9 +6,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddValidation();
-builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(connectionString));
-
-builder.Services.AddDefaultIdentity<WebApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<WebApplicationContext>();
+builder.Services.AddDbContext<WebApplication.Data.AppDbContext>(options => options.UseMySQL(connectionString));
 
 var app = builder.Build();
 
