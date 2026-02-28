@@ -3,7 +3,7 @@ CREATE DATABASE credenciales;
 USE credenciales;
 
 CREATE TABLE Maestros(
-	ID_Maestro INT AUTO_INCREMENT,
+	ID_Maestro INT NOT NULL AUTO_INCREMENT,
     PRIMARY KEY(ID_Maestro),
     ID_Centro INT,
     nombre NVARCHAR(100) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE Maestros(
 );
 
 CREATE TABLE Alumnos(
-	ID_Alumno INT AUTO_INCREMENT,
+	ID_Alumno INT NOT NULL AUTO_INCREMENT,
     PRIMARY KEY(ID_Alumno),
     ID_Centro INT NOT NULL,
     nombres NVARCHAR(50) NOT NULL,
@@ -25,12 +25,12 @@ CREATE TABLE Alumnos(
     nss VARCHAR(11),
     tipoSangre VARCHAR(3),
     tutor NVARCHAR(100) ,
-    telefonoTutor VARCHAR(10),
+    telefonoTutor VARCHAR(12),
     imagen TEXT
 );
 
 CREATE TABLE Centros(
-	ID_Centro INT AUTO_INCREMENT,
+	ID_Centro INT NOT NULL AUTO_INCREMENT,
     PRIMARY KEY(ID_Centro),
     nombre NVARCHAR(100) NOT NULL,
     clave VARCHAR(10)
@@ -39,4 +39,4 @@ CREATE TABLE Centros(
 ALTER TABLE Maestros ADD CONSTRAINT FK_IDCentro_Maestros FOREIGN KEY(ID_Centro) REFERENCES Centros(ID_Centro) ON DELETE CASCADE;
 ALTER TABLE Alumnos ADD CONSTRAINT FK_IDCentro_Alumnos FOREIGN KEY(ID_Centro) REFERENCES Centros(ID_Centro) ON DELETE CASCADE;
 
-#INSERT INTO Centros(ID_Centro, nombre, clave) VALUES(1, "Telebachillerato Nopalapan")
+INSERT INTO Centros(ID_Centro, nombre, clave) VALUES(1, "Telebachillerato Nopalapan", "30ETH0204Q")

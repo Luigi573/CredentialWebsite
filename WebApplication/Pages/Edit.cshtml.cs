@@ -47,30 +47,26 @@ namespace WebApplication.Pages
                 return Page();
             }
 
-            _context.Attach(Student).State = EntityState.Modified;
-
-            try
+            var student = await _context.Students.FindAsync(Student.Id);
+            if (student != null)
             {
+                student.Name = Student.Name;
+                student.FamilyName = Student.FamilyName;
+                student.BloodType = Student.BloodType;
+                student.CURP = Student.CURP;
+                student.TutorName = Student.TutorName;
+                student.TutorPhone = Student.TutorPhone;
+                student.SchoolPeriod = Student.SchoolPeriod;
+                student.Semester = Student.Semester;
+                //student.ProfilePictureUrl = Student.ProfilePictureUrl; TODO: ADD IMAGE UPLOAD FUNCTIONALITY
+
                 await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!StudentExists(Student.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
-
-            return RedirectToPage("./Index");
-        }
-
-        private bool StudentExists(int? id)
-        {
-            return _context.Students.Any(e => e.Id == id);
         }
     }
 }
