@@ -34,6 +34,7 @@ namespace WebApplication.Data
         [Column("semestre")]
         [Range(1, 6, ErrorMessage = "Seleccione un semestre válido")]
         public int Semester { get; set; }
+        [Display(Name = "Activo")]
         [Column("activo")]
         public bool IsActive { get; set; } = true;
         [Column("nss")]
