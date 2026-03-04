@@ -6,8 +6,6 @@ CREATE TABLE Maestros(
 	ID_Maestro INT NOT NULL AUTO_INCREMENT,
     PRIMARY KEY(ID_Maestro),
     ID_Centro INT,
-    nombre NVARCHAR(100) NOT NULL,
-    email NVARCHAR(100) NOT NULL,
     contraseña NVARCHAR(50) NOT NULL,
     imagen TEXT
 );

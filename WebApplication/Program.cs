@@ -8,6 +8,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddValidation();
 builder.Services.AddDbContext<WebApplication.Data.AppDbContext>(options => options.UseMySQL(connectionString));
 
+builder.Services.AddDefaultIdentity<WebApplication.Data.Teacher>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<WebApplication.Data.AppDbContext>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

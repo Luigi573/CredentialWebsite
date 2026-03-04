@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplication.Data
 {
     [Table("Maestros")]
-    public class Teacher
+    public class Teacher : IdentityUser
     {
         [Key]
         [Column("ID_Maestro")]
@@ -13,11 +14,16 @@ namespace WebApplication.Data
         [Required][Display(Name = "Nombre")]
         [Column("nombre")]
         public string Name { get; set; } = String.Empty;
-        [Required][Display(Name = "Correo")]
+
+
+
+
+
+        /*[Required][Display(Name = "Correo")]
         public string Email { get; set; } = String.Empty;
         [Required][Display(Name = "Contraseña")]
         [MaxLength(50, ErrorMessage = "La contraseña no puede exceder los 50 caracteres")]
         [DataType(DataType.Password)]
-        public string Password { get; set; } = String.Empty;
+        public string Password { get; set; } = String.Empty;*/
     }
 }
