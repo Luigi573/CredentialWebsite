@@ -21,6 +21,8 @@ namespace WebApplication.Pages
 
         [BindProperty]
         public Student Student { get; set; } = default!;
+        [BindProperty]
+        public IFormFile? UploadedPhoto { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -56,7 +58,34 @@ namespace WebApplication.Pages
                 student.TutorPhone = Student.TutorPhone;
                 student.SchoolPeriod = Student.SchoolPeriod;
                 student.Semester = Student.Semester;
-                //student.ProfilePictureUrl = Student.ProfilePictureUrl; TODO: ADD IMAGE UPLOAD FUNCTIONALITY
+
+
+                if (UploadedPhoto != null)
+                {
+                    var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos/upload");
+                    Directory.CreateDirectory(uploadPath);
+
+                    //Delete existing photo if exists
+                    if (!string.IsNullOrEmpty(student.ProfilePictureUrl))
+                    {
+                        var existingFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", student.ProfilePictureUrl.TrimStart('/'));
+                        if (System.IO.File.Exists(existingFilePath))
+                        {
+                            System.IO.File.Delete(existingFilePath);
+                        }
+
+                    }
+
+                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(UploadedPhoto.FileName)}";
+                    var filePath = Path.Combine(uploadPath, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await UploadedPhoto.CopyToAsync(stream);
+                    }
+
+                    student.ProfilePictureUrl = $"/photos/upload/{fileName}";
+                }
 
                 await _context.SaveChangesAsync();
                 return RedirectToPage("./Index");

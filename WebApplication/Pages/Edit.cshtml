@@ -68,9 +68,9 @@
         </div>
     </div>
     <div class="row mx-auto mt-3 w-25 h-25">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" id="photo_preview" class="img-thumbnail mb-2" />
-        <input type="file" name="studentPhoto" id="photo_uploader" accept=".png, .jpg" />
-        <button id="submit_button" class="btn btn-primary mt-3" type="submit">Submit</button>
+        <img src="@(string.IsNullOrEmpty(Model.Student.ProfilePictureUrl) ? "/photos/placeholder.png" : Model.Student.ProfilePictureUrl)" id="photo_preview" class="img-thumbnail mb-2" />
+        <input type="file" name="UploadedPhoto" id="photo_uploader" accept=".png, .jpg" />
+        <button id="submit_button" class="btn btn-primary mt-3" type="submit">Guardar Cambios</button>
     </div>
 </form>
 
