@@ -3,10 +3,8 @@ CREATE DATABASE credenciales;
 USE credenciales;
 
 CREATE TABLE Maestros(
-	ID_Maestro INT NOT NULL AUTO_INCREMENT,
-    PRIMARY KEY(ID_Maestro),
     ID_Centro INT,
-    contraseña NVARCHAR(50) NOT NULL,
+    nombre NVARCHAR(100) NOT NULL,
     imagen TEXT
 );
 
