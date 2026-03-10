@@ -5,13 +5,11 @@ using WebApplication.Data;
 var builder = Microsoft.AspNetCore.Builder.WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddValidation();
-builder.Services.AddDbContext<WebApplication.Data.AppDbContext>(options => options.UseMySQL(connectionString));
-
-builder.Services.AddDefaultIdentity<WebApplication.Data.Teacher>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<WebApplication.Data.AppDbContext>();
+builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(connectionString));
+builder.Services.AddDefaultIdentity<Teacher>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>();
 
 var app = builder.Build();
 
@@ -21,6 +19,20 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    if (!await roleManager.RoleExistsAsync("Teacher"))
+    {
+        await roleManager.CreateAsync(new IdentityRole("Teacher"));
+    }
+    if (!await roleManager.RoleExistsAsync("Admin"))
+    {
+        await roleManager.CreateAsync(new IdentityRole("Admin"));
+    }
 }
 
 app.UseHttpsRedirection();

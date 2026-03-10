@@ -3,15 +3,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplication.Data
 {
+    [Table("Centros")]
     public class School
     {
         [Key]
+        [Column("ID_Centro")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required][Display(Name = "Nombre")]
         [Column("nombre")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
         [Required][Display(Name = "Clave")]
+        [StringLength(100, MinimumLength = 10, ErrorMessage = "El nombre debe tener ")]
         [Column("clave")]
-        public string Code { get; set; }
+        public string? Code { get; set; }
     }
 }

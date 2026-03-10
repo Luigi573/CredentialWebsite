@@ -12,13 +12,12 @@ namespace WebApplication.Pages
     public class IndexModel : PageModel
     {
         private readonly WebApplication.Data.AppDbContext _context;
+        public IList<Student> Student { get; set; } = default!;
 
         public IndexModel(WebApplication.Data.AppDbContext context)
         {
             _context = context;
         }
-
-        public IList<Student> Student { get;set; } = default!;
 
         public async Task OnGetAsync()
         {

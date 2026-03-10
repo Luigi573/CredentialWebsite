@@ -11,14 +11,14 @@ namespace WebApplication.Data
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Column("ID_Centro")]
-        public int CenterId { get; set; } = 1;
+        public int? SchoolId { get; set; }
         [Required][Display(Name = "Nombre(s)")]
-        [Column("nombres")]
+        [Column("nombres", TypeName = "NVARCHAR(50)")]
         [MinLength(5, ErrorMessage = "El nombre debe tener al menos 5 caracteres.")]
         [MaxLength(50, ErrorMessage = "El nombre no puede exceder los 50 caracteres.")]
         public string Name { get; set; } = String.Empty;
         [Required][Display(Name = "Apellidos")]
-        [Column("apellidos")]
+        [Column("apellidos", TypeName = "NVARCHAR(50)")]
         [MinLength(5, ErrorMessage = "El nombre debe tener al menos 5 caracteres.")]
         [MaxLength(50, ErrorMessage = "El nombre no puede exceder los 50 caracteres.")]
         public string FamilyName { get; set; } = String.Empty;

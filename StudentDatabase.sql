@@ -26,7 +26,7 @@ CREATE TABLE Alumnos(
 );
 
 CREATE TABLE Centros(
-	ID_Centro INT NOT NULL AUTO_INCREMENT,
+	ID_Centro INT AUTO_INCREMENT,
     PRIMARY KEY(ID_Centro),
     nombre NVARCHAR(100) NOT NULL,
     clave VARCHAR(10)

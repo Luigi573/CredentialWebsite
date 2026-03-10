@@ -11,8 +11,8 @@ using WebApplication.Data;
 namespace WebApplication.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260304021238_MsIdentity")]
-    partial class MsIdentity
+    [Migration("20260305013322_FirstMigration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,11 +158,13 @@ namespace WebApplication.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("ID_Centro");
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
                         .HasColumnName("clave");
 
                     b.Property<string>("Name")
@@ -172,7 +174,7 @@ namespace WebApplication.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Schools");
+                    b.ToTable("Centros");
                 });
 
             modelBuilder.Entity("WebApplication.Data.Student", b =>
@@ -192,14 +194,10 @@ namespace WebApplication.Migrations
                         .HasColumnType("varchar(18)")
                         .HasColumnName("curp");
 
-                    b.Property<int>("CenterId")
-                        .HasColumnType("int")
-                        .HasColumnName("ID_Centro");
-
                     b.Property<string>("FamilyName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
+                        .HasColumnType("NVARCHAR(50)")
                         .HasColumnName("apellidos");
 
                     b.Property<bool>("IsActive")
@@ -214,12 +212,16 @@ namespace WebApplication.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
+                        .HasColumnType("NVARCHAR(50)")
                         .HasColumnName("nombres");
 
                     b.Property<string>("ProfilePictureUrl")
                         .HasColumnType("longtext")
                         .HasColumnName("imagen");
+
+                    b.Property<int?>("SchoolId")
+                        .HasColumnType("int")
+                        .HasColumnName("ID_Centro");
 
                     b.Property<string>("SchoolPeriod")
                         .IsRequired()
@@ -270,7 +272,8 @@ namespace WebApplication.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
                         .HasColumnName("nombre");
 
                     b.Property<string>("NormalizedEmail")
@@ -290,6 +293,10 @@ namespace WebApplication.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<int>("SchoolId")
+                        .HasColumnType("int")
+                        .HasColumnName("ID_Centro");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");
 
@@ -308,6 +315,8 @@ namespace WebApplication.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
+
+                    b.HasIndex("SchoolId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -361,6 +370,17 @@ namespace WebApplication.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WebApplication.Data.Teacher", b =>
+                {
+                    b.HasOne("WebApplication.Data.School", "School")
+                        .WithMany()
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("School");
                 });
 #pragma warning restore 612, 618
         }
