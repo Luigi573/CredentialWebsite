@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplication.Data
 {
-    [Table("Maestros")]
     public class Teacher : IdentityUser
     {
         [Required][Display(Name = "Nombre Completo")]

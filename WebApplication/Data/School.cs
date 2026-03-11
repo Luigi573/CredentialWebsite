@@ -10,12 +10,10 @@ namespace WebApplication.Data
         [Column("ID_Centro")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required][Display(Name = "Nombre")]
-        [Column("nombre")]
+        [Required][Display(Name = "Nombre")][Column("nombre")]
         public string? Name { get; set; }
-        [Required][Display(Name = "Clave")]
+        [Required][Display(Name = "Clave")][Column("clave")]
         [StringLength(100, MinimumLength = 10, ErrorMessage = "El nombre debe tener ")]
-        [Column("clave")]
         public string? Code { get; set; }
     }
 }

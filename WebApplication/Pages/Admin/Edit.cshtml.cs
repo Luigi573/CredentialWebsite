@@ -1,50 +1,53 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 using WebApplication.Data;
 
 namespace WebApplication.Pages.Admin
 {
-    //[Authorize(Roles = "Admin")]
-    public class AddUserModel : PageModel
+    public class EditModel : PageModel
     {
         private readonly AppDbContext _context;
         private readonly UserManager<Teacher> _userManager;
-
+        [BindProperty]
+        public Teacher Teacher { get; set; } = default!;
         public IList<SelectListItem> Schools { get; set; } = default!;
 
-        public AddUserModel(AppDbContext context, UserManager<Teacher> userManager)
+        public EditModel(AppDbContext context, UserManager<Teacher> userManager)
         {
             _context = context;
             _userManager = userManager;
         }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync(string? id)
         {
-            PopulateSchools();
-        }
+            if (id == null)
+            {
+                return NotFound();
+                
+            }
 
-        [BindProperty]
-        public Teacher Teacher { get; set; } = default!;
-        [BindProperty][Required][DataType(DataType.Password)]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", ErrorMessage = "La contraseña debe tener al menos 8 caracteres, incluyendo minúsculas, mayúsculas, números y caracteres especiales")]
-        public string Password { get; set; } = string.Empty;
+            var teacher = await _context.Users.FindAsync(id);
+            
+            if(teacher == null)
+            {
+                return NotFound();
+            }
+
+            Teacher = teacher;
+            PopulateSchools();
+            return Page();
+        }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
-                PopulateSchools();
                 return Page();
             }
 
-            Teacher.UserName = Teacher.Email;
-
-            var result = await _userManager.CreateAsync(Teacher, Password);
+            var result = await _userManager.UpdateAsync(Teacher);
 
             if (!result.Succeeded)
             {
@@ -58,8 +61,7 @@ namespace WebApplication.Pages.Admin
                 
             }
 
-            await _userManager.AddToRoleAsync(Teacher, "Teacher");
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Admin/Index");
         }
 
         private void PopulateSchools()

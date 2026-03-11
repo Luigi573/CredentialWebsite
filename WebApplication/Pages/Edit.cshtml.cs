@@ -26,18 +26,20 @@ namespace WebApplication.Pages
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
+            if (id != null)
             {
+                var student = await _context.Students.FirstOrDefaultAsync(m => m.Id == id);
+
+                if (student != null)
+                {
+                    Student = student;
+                    return Page(); 
+                }
+
                 return NotFound();
             }
 
-            var student =  await _context.Students.FirstOrDefaultAsync(m => m.Id == id);
-            if (student == null)
-            {
-                return NotFound();
-            }
-            Student = student;
-            return Page();
+            return NotFound();
         }
 
         public async Task<IActionResult> OnPostAsync()

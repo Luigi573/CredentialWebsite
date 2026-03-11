@@ -6,7 +6,7 @@
 <h1>Gestión de Usuarios</h1>
 
 <p>
-    <a asp-page="AddUser">Agregar</a>
+    <a asp-page="AddUser">Agregar Usuario</a>
 </p>
 <table class="table">
     <thead>
@@ -19,6 +19,9 @@
             </th>
             <th>
                 Nombre Centro
+            </th>
+            <th>
+                Clave Centro
             </th>
             <th></th>
         </tr>
@@ -37,8 +40,11 @@
                     @(item.School?.Name ?? string.Empty)
                 </td>
                 <td>
+                    @(item.School?.Code ?? string.Empty)
+                </td>
+                <td>
                     <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./UserInfo" asp-route-id="@item.Id">Details</a> |
                     <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>

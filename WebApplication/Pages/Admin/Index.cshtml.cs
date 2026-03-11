@@ -19,7 +19,7 @@ namespace WebApplication.Pages.Admin
 
         public async Task OnGetAsync()
         {
-            Teachers = await _context.Users.ToListAsync();
+            Teachers = await _context.Users.Include(teacher => teacher.School).ToListAsync();
         }
     }
 }
