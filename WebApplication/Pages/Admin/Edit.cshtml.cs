@@ -12,6 +12,8 @@ namespace WebApplication.Pages.Admin
         private readonly UserManager<Teacher> _userManager;
         [BindProperty]
         public Teacher Teacher { get; set; } = default!;
+        [BindProperty]
+        public string Password { get; set; } = string.Empty;
         public IList<SelectListItem> Schools { get; set; } = default!;
 
         public EditModel(AppDbContext context, UserManager<Teacher> userManager)

@@ -21,5 +21,24 @@ namespace WebApplication.Pages.Admin
         {
             Teachers = await _context.Users.Include(teacher => teacher.School).ToListAsync();
         }
+
+        public async Task<IActionResult> OnPostDeleteAsync(string? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var teacher = await _context.Users.FindAsync(id);
+
+            if (teacher == null)
+            {
+                return NotFound();
+            }
+
+            _context.Users.Remove(teacher);
+            await _context.SaveChangesAsync();
+            return RedirectToPage();
+        }
     }
 }
