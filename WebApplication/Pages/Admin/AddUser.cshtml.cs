@@ -3,9 +3,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
+using MySqlX.XDevAPI;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 using WebApplication.Data;
+using WebApplication.Services;
 
 namespace WebApplication.Pages.Admin
 {
@@ -14,13 +18,15 @@ namespace WebApplication.Pages.Admin
     {
         private readonly AppDbContext _context;
         private readonly UserManager<Teacher> _userManager;
+        private readonly IEmailSender _emailSender;
 
         public IList<SelectListItem> Schools { get; set; } = default!;
 
-        public AddUserModel(AppDbContext context, UserManager<Teacher> userManager)
+        public AddUserModel(AppDbContext context, UserManager<Teacher> userManager, IEmailSender emailSender)
         {
             _context = context;
             _userManager = userManager;
+            _emailSender = emailSender;
         }
 
         public void OnGet()
@@ -30,9 +36,8 @@ namespace WebApplication.Pages.Admin
 
         [BindProperty]
         public Teacher Teacher { get; set; } = default!;
-        [BindProperty][Required][DataType(DataType.Password)]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", ErrorMessage = "La contraseña debe tener al menos 8 caracteres, incluyendo minúsculas, mayúsculas, números y caracteres especiales")]
-        public string Password { get; set; } = string.Empty;
+        [Required]
+        public string SelectedRole { get; set; } = "Teacher";
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -43,8 +48,9 @@ namespace WebApplication.Pages.Admin
             }
 
             Teacher.UserName = Teacher.Email;
+            Teacher.EmailConfirmed = true; //Since admin already knows the emails no need to confirm them
 
-            var result = await _userManager.CreateAsync(Teacher, Password);
+            var result = await _userManager.CreateAsync(Teacher);
 
             if (!result.Succeeded)
             {
@@ -58,7 +64,20 @@ namespace WebApplication.Pages.Admin
                 
             }
 
-            await _userManager.AddToRoleAsync(Teacher, "Teacher");
+            await _userManager.AddToRoleAsync(Teacher, SelectedRole);
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(Teacher);
+            var encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+            var passwordSetLink = Url.Page("/Account/ResetPassword", pageHandler : null, values: new { area = "Identity", email = Teacher.Email, code = encodedToken }, protocol: Request.Scheme);
+
+            var body = $@"<h1>Tu cuenta ha sido creada.</h1>
+                        <p>
+                            Por favor, establece tu contraseña utilizando el siguiente enlace: <a href=""{passwordSetLink}"">Establecer contraseña</a>
+                        </p>
+                        <p>Si el botón no funciona, copia y pega este enlace en tu navegador:</p>
+                        <p>{passwordSetLink}</p>";
+
+            await _emailSender.SendEmail(Teacher.Email, "Bienvenido a la plataforma", body);
             return RedirectToPage("./Index");
         }
 

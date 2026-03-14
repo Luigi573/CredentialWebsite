@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using WebApplication.Data;
+using WebApplication.Services;
 
 var builder = Microsoft.AspNetCore.Builder.WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -15,9 +16,9 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireNonAlphanumeric = true;
     options.Password.RequireUppercase = true;
     options.Password.RequiredLength = 8;
-    options.SignIn.RequireConfirmedEmail = true;
     options.User.RequireUniqueEmail = true;
 });
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 
