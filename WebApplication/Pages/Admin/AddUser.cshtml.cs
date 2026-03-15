@@ -13,7 +13,7 @@ using WebApplication.Services;
 
 namespace WebApplication.Pages.Admin
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class AddUserModel : PageModel
     {
         private readonly AppDbContext _context;

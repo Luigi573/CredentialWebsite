@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -6,6 +7,7 @@ using WebApplication.Data;
 
 namespace WebApplication.Pages.Admin
 {
+    [Authorize(Roles = "Admin")]
     public class UserInfoModel : PageModel
     {
         private readonly AppDbContext _appDbContext;

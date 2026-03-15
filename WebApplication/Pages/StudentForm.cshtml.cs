@@ -1,16 +1,21 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApplication.Data;
 
 namespace WebApplication.Pages
 {
+    [Authorize(Roles = "Admin,Teacher")]
     public class StudentFormModel : PageModel
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<Teacher> _userManager;
 
-        public StudentFormModel(AppDbContext context)
+        public StudentFormModel(AppDbContext context, UserManager<Teacher> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult OnGet()
@@ -27,32 +32,39 @@ namespace WebApplication.Pages
         {
             if (ModelState.IsValid)
             {
-                _context.Students.Add(Student);
 
-                if (UploadedPhoto != null)
+                var teacher = await _userManager.GetUserAsync(User);
+
+                if (teacher != null)
                 {
-                    var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos/upload");
-                    Directory.CreateDirectory(uploadPath);
+                    Student.SchoolId = teacher.SchoolId;
+                    _context.Students.Add(Student);
 
-                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(UploadedPhoto.FileName)}";
-                    var filePath = Path.Combine(uploadPath, fileName);
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    if (UploadedPhoto != null)
                     {
-                        await UploadedPhoto.CopyToAsync(stream);
+                        var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos/upload");
+                        Directory.CreateDirectory(uploadPath);
+
+                        var fileName = $"{Guid.NewGuid()}{Path.GetExtension(UploadedPhoto.FileName)}";
+                        var filePath = Path.Combine(uploadPath, fileName);
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await UploadedPhoto.CopyToAsync(stream);
+                        }
+
+                        Student.ProfilePictureUrl = $"/photos/upload/{fileName}";
                     }
 
-                    Student.ProfilePictureUrl = $"/photos/upload/{fileName}";
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToPage("./Index");
                 }
 
-                await _context.SaveChangesAsync();
+                return Forbid();
+            }
 
-                return RedirectToPage("./Index");
-            }
-            else
-            {
-                return Page();
-            }
+            return Page();
         }
     }
 }

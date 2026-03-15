@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -6,6 +7,7 @@ using WebApplication.Data;
 
 namespace WebApplication.Pages.Admin
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         private readonly AppDbContext _context;
@@ -42,25 +44,27 @@ namespace WebApplication.Pages.Admin
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return Page();
-            }
+                var result = await _userManager.UpdateAsync(Teacher);
 
-            var result = await _userManager.UpdateAsync(Teacher);
-
-            if (!result.Succeeded)
-            {
-                foreach (var error in result.Errors)
+                if (result.Succeeded)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    return RedirectToPage("./Admin/Index");
                 }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
 
-                PopulateSchools();
-                return Page();
+                    PopulateSchools();
+                    return Page();
+                }
             }
 
-            return RedirectToPage("./Admin/Index");
+            return Page();
         }
 
         private void PopulateSchools()

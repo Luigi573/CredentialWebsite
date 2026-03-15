@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApplication.Data;
 
 namespace WebApplication.Pages
 {
+    [Authorize(Roles = "Admin,Teacher")]
     public class CreateModel : PageModel
     {
-        private readonly WebApplication.Data.AppDbContext _context;
+        private readonly AppDbContext _context;
+        private readonly UserManager<Teacher> _userManager;
 
-        public CreateModel(WebApplication.Data.AppDbContext context)
+        public CreateModel(AppDbContext context, UserManager<Teacher> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult OnGet()
@@ -26,18 +26,25 @@ namespace WebApplication.Pages
         [BindProperty]
         public Student Student { get; set; } = default!;
 
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return Page();
+                var teacher = await _userManager.GetUserAsync(User);
+
+                if (teacher != null)
+                {
+                    Student.SchoolId = teacher.SchoolId;
+                    _context.Students.Add(Student);
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToPage("./Index");
+                }
+
+                return Forbid();
             }
 
-            _context.Students.Add(Student);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            return Page();
         }
     }
 }

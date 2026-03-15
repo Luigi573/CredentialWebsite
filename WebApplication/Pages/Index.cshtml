@@ -5,40 +5,40 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Registro de estudiantes</h1>
 
 <p>
-    <a asp-page="StudentForm">Create New</a>
+    <a asp-page="StudentForm">Añadir estudiante</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].Name)
+                @Html.DisplayNameFor(model => model.Students[0].Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].FamilyName)
+                @Html.DisplayNameFor(model => model.Students[0].FamilyName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].CURP)
+                @Html.DisplayNameFor(model => model.Students[0].CURP)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].SchoolPeriod)
+                @Html.DisplayNameFor(model => model.Students[0].SchoolPeriod)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].Semester)
+                @Html.DisplayNameFor(model => model.Students[0].Semester)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].NSS)
+                @Html.DisplayNameFor(model => model.Students[0].NSS)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].ProfilePictureUrl)
+                @Html.DisplayNameFor(model => model.Students[0].ProfilePictureUrl)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Student) {
+@foreach (var item in Model.Students) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
