@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WebApplication.Data;
@@ -11,7 +16,7 @@ namespace WebApplication.Pages
     {
         private readonly AppDbContext _context;
         private readonly UserManager<Teacher> _userManager;
-        public IList<Student> Students { get; set; } = default!;
+        public IList<Student> Students { get; set; } = new List<Student>();
 
         public IndexModel(AppDbContext context, UserManager<Teacher> userManager)
         {

@@ -28,7 +28,15 @@
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Index">Administrar Usuarios</a>
                             </li>   
                         }
-                    </ul>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <form method="post" asp-area="Identity" asp-page="/Account/Logout">
+                                    <button type="submit" class="nav-link btn btn-link text-danger">Cerrar sesión</button>
+                                </form>
+                            </li>
+                        }
+                        </ul>
                 </div>
             </div>
         </nav>
