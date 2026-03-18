@@ -22,7 +22,7 @@
         </div>
         <div class="col">
             <label asp-for="Student.SchoolPeriod" class="form-label"></label>
-            <input asp-for="Student.SchoolPeriod" class="form-control" />
+            <input asp-for="Student.SchoolPeriod" class="form-control" disabled />
             <span asp-validation-for="Student.SchoolPeriod" class="text-danger"></span>
         </div>
         <div class="col">
@@ -65,8 +65,3 @@
         <button id="submit_button" class="btn btn-primary mt-3" type="submit">Submit</button>
     </div>
 </form>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-    <script src="~/js/ImageUploading.js"></script>
-}

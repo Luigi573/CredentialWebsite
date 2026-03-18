@@ -37,6 +37,7 @@ namespace WebApplication.Pages.Admin
         [BindProperty]
         public Teacher Teacher { get; set; } = default!;
         [Required]
+        [BindProperty]
         public string SelectedRole { get; set; } = "Teacher";
 
         public async Task<IActionResult> OnPostAsync()
@@ -48,7 +49,7 @@ namespace WebApplication.Pages.Admin
             }
 
             Teacher.UserName = Teacher.Email;
-            Teacher.EmailConfirmed = true; //Since admin already knows the emails no need to confirm them
+            Teacher.EmailConfirmed = true; 
 
             var result = await _userManager.CreateAsync(Teacher);
 

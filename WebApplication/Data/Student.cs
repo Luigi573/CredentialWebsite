@@ -26,7 +26,7 @@ namespace WebApplication.Data
         [Column("curp")]
         [StringLength(18, MinimumLength = 18, ErrorMessage = "La CURP debe tener 18 caracteres.")]
         public string CURP { get; set; } = String.Empty;
-        [Required][Display(Name = "Periodo Escolar")]
+        [Display(Name = "Periodo Escolar")]
         [Column("periodoEscolar")]
         [RegularExpression(@"^(202[2-9]|20[3-9]\d)-(202[2-9]|20[3-9]\d)$", ErrorMessage = "Ejemplo: '2025-2026' & '2026-2026'")]
         public string SchoolPeriod { get; set; } = String.Empty;

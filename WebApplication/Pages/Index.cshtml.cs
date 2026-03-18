@@ -30,7 +30,7 @@ namespace WebApplication.Pages
 
             if (teacher != null)
             {
-                Students = await _context.Students.Where(s => s.SchoolId == teacher.SchoolId).ToListAsync();
+                Students = await _context.Students.Where(s => s.SchoolId == teacher.SchoolId && s.IsActive).ToListAsync();
             }
         }
     }
