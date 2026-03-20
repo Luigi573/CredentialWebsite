@@ -43,7 +43,7 @@
             {
                 <tr>
                     <td>
-                        <input type="checkbox" name="selectedStudents" value="@item.Id" class="student-checkbox" />
+                        <input type="checkbox" name="SelectedStudents" value="@item.Id" class="student-checkbox" />
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
@@ -72,7 +72,7 @@
         </tbody>
     </table>
     <div class="row mx-auto mt-3 w-25 h-25">
-        <button id="delete_students" class="btn btn-primary mt-3" type="submit" disabled>Dar de baja</button>
+        <button id="delete_students" class="btn btn-primary mt-3" type="submit" asp-page-handler="Deactivate" disabled>Dar de baja</button>
     </div>
 </form>
 
