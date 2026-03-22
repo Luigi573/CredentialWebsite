@@ -20,7 +20,7 @@ namespace WebApplication.Pages.Admin
         private readonly UserManager<Teacher> _userManager;
         private readonly IEmailSender _emailSender;
 
-        public IList<SelectListItem> Schools { get; set; } = default!;
+        public IList<SelectListItem> Schools { get; set; } = new List<SelectListItem>();
 
         public AddUserModel(AppDbContext context, UserManager<Teacher> userManager, IEmailSender emailSender)
         {

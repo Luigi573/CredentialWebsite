@@ -25,11 +25,8 @@
             <select asp-for="Student.Semester" class="form-control">
                 <option value="" disabled selected>--Selecionar Semestre--</option>
                 <option value="1">1er Semestre</option>
-                <option value="2">2do Semestre</option>
                 <option value="3">3er Semestre</option>
-                <option value="4">4to Semestre</option>
                 <option value="5">5to Semestre</option>
-                <option value="6">6to Semestre</option>
             </select>
             <span asp-validation-for="Student.Semester" class="text-danger"></span>
         </div>
@@ -60,3 +57,7 @@
         <button id="submit_button" class="btn btn-primary mt-3" type="submit">Submit</button>
     </div>
 </form>
+
+@section Scripts {
+    <script src="~/js/ImageUploading.js"></script>
+}
