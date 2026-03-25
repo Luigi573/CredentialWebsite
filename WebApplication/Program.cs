@@ -33,6 +33,8 @@ if (!app.Environment.IsDevelopment())
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<Teacher>>();
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
     if (!await roleManager.RoleExistsAsync("Teacher"))
     {
@@ -41,6 +43,42 @@ using (var scope = app.Services.CreateScope())
     if (!await roleManager.RoleExistsAsync("Admin"))
     {
         await roleManager.CreateAsync(new IdentityRole("Admin"));
+    }
+
+    // Seed initial data
+    if (!context.Set<School>().Any())
+    {
+        context.Set<School>().Add(new School
+        {
+            Id = 1,
+            Name = "Telebachillerato Coacotla",
+            Code = "30ETH0224D"
+        });
+
+        await context.SaveChangesAsync();
+    }
+
+    // Seed admin user
+    var adminEmail = "xavier.arian@gmail.com";
+    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+
+    if (adminUser == null)
+    {
+        var user = new Teacher
+        {
+            UserName = adminEmail,
+            Email = adminEmail,
+            SchoolId = 1, 
+            EmailConfirmed = true
+        };
+
+        var adminPassword = "Luigi573*"; // change this ASAP in production
+        var result = await userManager.CreateAsync(user, adminPassword);
+
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(user, "Admin");
+        }
     }
 }
 

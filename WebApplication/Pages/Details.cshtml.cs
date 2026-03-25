@@ -6,7 +6,6 @@ using WebApplication.Data;
 
 namespace WebApplication.Pages
 {
-    [Authorize(Roles = "Admin,Teacher")]
     public class DetailsModel : PageModel
     {
         private readonly AppDbContext _context;

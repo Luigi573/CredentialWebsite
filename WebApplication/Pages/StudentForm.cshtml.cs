@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using WebApplication.Data;
 
 namespace WebApplication.Pages
@@ -37,6 +38,8 @@ namespace WebApplication.Pages
 
                 if (teacher != null)
                 {
+                    var currentSchoolYear = await _context.SchoolYears.FirstOrDefaultAsync(sy => sy.IsActive);
+                    Student.SchoolPeriodId = currentSchoolYear?.Id ?? 0;
                     Student.SchoolId = teacher.SchoolId;
                     _context.Students.Add(Student);
 

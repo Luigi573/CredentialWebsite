@@ -35,6 +35,6 @@ CREATE TABLE Centros(
 ALTER TABLE Maestros ADD CONSTRAINT FK_IDCentro_Maestros FOREIGN KEY(ID_Centro) REFERENCES Centros(ID_Centro) ON DELETE CASCADE;
 ALTER TABLE Alumnos ADD CONSTRAINT FK_IDCentro_Alumnos FOREIGN KEY(ID_Centro) REFERENCES Centros(ID_Centro) ON DELETE CASCADE;
 
-INSERT INTO Centros(ID_Centro, nombre, clave) VALUES(1, "Telebachillerato Nopalapan", "30ETH0204Q");
-INSERT INTO Centros(ID_Centro, nombre, clave) VALUES(2, "Telebachillerato Coacotla", "30ETH0224D");
+INSERT INTO Centros(ID_Centro, nombre, clave) VALUES(1, "Telebachillerato Coacotla", "30ETH0224D");
+INSERT INTO Centros(ID_Centro, nombre, clave) VALUES(2, "Telebachillerato Nopalapan", "30ETH0204Q");
 INSERT INTO Centros(ID_Centro, nombre, clave) VALUES(3, "Telebachillerato Lealtad de Muñoz", "30ETH0204Q");

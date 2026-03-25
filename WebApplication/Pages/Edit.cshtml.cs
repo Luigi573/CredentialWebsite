@@ -58,7 +58,6 @@ namespace WebApplication.Pages
                 student.CURP = Student.CURP;
                 student.TutorName = Student.TutorName;
                 student.TutorPhone = Student.TutorPhone;
-                student.SchoolPeriod = Student.SchoolPeriod;
                 student.Semester = Student.Semester;
 
 

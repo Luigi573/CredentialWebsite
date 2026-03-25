@@ -30,10 +30,10 @@
             @Html.DisplayFor(model => model.Student.CURP)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Student.SchoolPeriod)
+            @Html.DisplayNameFor(model => model.Student.SchoolYear)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Student.SchoolPeriod)
+            @(Model.Student.SchoolYear?.Name)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Student.Semester)

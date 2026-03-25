@@ -9,5 +9,6 @@ namespace WebApplication.Data
 
         public DbSet<Student> Students { get; set; }
         public DbSet<School> Schools {  get; set; }
+        public DbSet<SchoolYear> SchoolYears { get; set; }
     }
 }
