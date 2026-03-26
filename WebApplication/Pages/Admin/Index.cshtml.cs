@@ -45,9 +45,8 @@ namespace WebApplication.Pages.Admin
 
         public async Task<IActionResult> OnPostAdvanceYearAsync()
         {
-            if(CurrentSchoolYear.StartDate <= DateTime.Now && CurrentSchoolYear.EndDate >= DateTime.Now)
+            if(CurrentSchoolYear.EndDate <= DateTime.Now)
             {
-                //Update students
                 var students = await _context.Students.ToListAsync();
 
                 foreach (var student in students)
@@ -64,7 +63,6 @@ namespace WebApplication.Pages.Admin
 
                 var oldYear = await _context.SchoolYears.Where(sy => sy.IsActive).FirstOrDefaultAsync();
                 oldYear?.IsActive = false;
-
                 SchoolYear newYear = new SchoolYear
                 {
                     Name = $"{DateTime.Now.Year}-{DateTime.Now.Year + 1}",
