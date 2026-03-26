@@ -8,6 +8,17 @@
 <p>
     <a asp-page="AddUser">Agregar Usuario</a>
 </p>
+<form asp-page-handler="AdvanceYear" method="post" class="mb-3 d-flex align-items-center justify-content-between">
+    <p class="mb-0"><strong>Ciclo Escolar: </strong>@Model.CurrentSchoolYear.Name</p>
+    @if (Model.CurrentSchoolYear.StartDate <= DateTime.Now && Model.CurrentSchoolYear.EndDate >= DateTime.Now)
+    {
+        <button type="submit" class="btn btn-primary">Avanzar ciclo</button>
+    }
+    else
+    {
+        <span class="text-muted">No se puede avanzar el ciclo actualmente</span>
+    }
+</form>
 <table class="table">
     <thead>
         <tr>
