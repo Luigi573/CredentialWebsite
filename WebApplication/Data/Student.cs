@@ -51,7 +51,7 @@ namespace WebApplication.Data
         [Column("imagen")]
         public string? ProfilePictureUrl { get; set; }
         [Column("ID_PeriodoEscolar")]
-        public int SchoolPeriodId { get; set; }
+        public int SchoolYearId { get; set; }
         [Display(Name = "Ciclo Escolar")]
         public SchoolYear? SchoolYear { get; set; }
     }

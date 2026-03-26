@@ -16,31 +16,6 @@ namespace WebApplication.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Alumnos",
-                columns: table => new
-                {
-                    ID_Alumno = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    ID_Centro = table.Column<int>(type: "int", nullable: true),
-                    nombres = table.Column<string>(type: "NVARCHAR(50)", maxLength: 50, nullable: false),
-                    apellidos = table.Column<string>(type: "NVARCHAR(50)", maxLength: 50, nullable: false),
-                    curp = table.Column<string>(type: "varchar(18)", maxLength: 18, nullable: false),
-                    periodoEscolar = table.Column<string>(type: "longtext", nullable: false),
-                    semestre = table.Column<int>(type: "int", nullable: false),
-                    activo = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    nss = table.Column<string>(type: "varchar(11)", maxLength: 11, nullable: true),
-                    tipoSangre = table.Column<string>(type: "longtext", nullable: true),
-                    tutor = table.Column<string>(type: "longtext", nullable: true),
-                    telefonoTutor = table.Column<string>(type: "longtext", nullable: true),
-                    imagen = table.Column<string>(type: "longtext", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Alumnos", x => x.ID_Alumno);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -67,6 +42,23 @@ namespace WebApplication.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Centros", x => x.ID_Centro);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "CiclosEscolares",
+                columns: table => new
+                {
+                    ID_PeriodoEscolar = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    nombre = table.Column<string>(type: "longtext", nullable: false),
+                    fechaInicio = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    fechaFin = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    activo = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CiclosEscolares", x => x.ID_PeriodoEscolar);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -122,6 +114,37 @@ namespace WebApplication.Migrations
                         column: x => x.ID_Centro,
                         principalTable: "Centros",
                         principalColumn: "ID_Centro",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Alumnos",
+                columns: table => new
+                {
+                    ID_Alumno = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    ID_Centro = table.Column<int>(type: "int", nullable: true),
+                    nombres = table.Column<string>(type: "NVARCHAR(50)", maxLength: 50, nullable: false),
+                    apellidos = table.Column<string>(type: "NVARCHAR(50)", maxLength: 50, nullable: false),
+                    curp = table.Column<string>(type: "varchar(18)", maxLength: 18, nullable: false),
+                    semestre = table.Column<int>(type: "int", nullable: false),
+                    activo = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    nss = table.Column<string>(type: "varchar(11)", maxLength: 11, nullable: true),
+                    tipoSangre = table.Column<string>(type: "longtext", nullable: true),
+                    tutor = table.Column<string>(type: "longtext", nullable: true),
+                    telefonoTutor = table.Column<string>(type: "longtext", nullable: true),
+                    imagen = table.Column<string>(type: "longtext", nullable: true),
+                    ID_PeriodoEscolar = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Alumnos", x => x.ID_Alumno);
+                    table.ForeignKey(
+                        name: "FK_Alumnos_CiclosEscolares_ID_PeriodoEscolar",
+                        column: x => x.ID_PeriodoEscolar,
+                        principalTable: "CiclosEscolares",
+                        principalColumn: "ID_PeriodoEscolar",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
@@ -216,6 +239,11 @@ namespace WebApplication.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Alumnos_ID_PeriodoEscolar",
+                table: "Alumnos",
+                column: "ID_PeriodoEscolar");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
@@ -278,6 +306,9 @@ namespace WebApplication.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "CiclosEscolares");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

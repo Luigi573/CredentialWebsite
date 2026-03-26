@@ -181,8 +181,8 @@ namespace WebApplication.Migrations
                         .HasColumnType("int")
                         .HasColumnName("ID_PeriodoEscolar");
 
-                    b.Property<DateOnly>("EndDate")
-                        .HasColumnType("date")
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("fechaFin");
 
                     b.Property<bool>("IsActive")
@@ -194,8 +194,8 @@ namespace WebApplication.Migrations
                         .HasColumnType("longtext")
                         .HasColumnName("nombre");
 
-                    b.Property<DateOnly>("StartDate")
-                        .HasColumnType("date")
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("fechaInicio");
 
                     b.HasKey("Id");
@@ -249,12 +249,9 @@ namespace WebApplication.Migrations
                         .HasColumnType("int")
                         .HasColumnName("ID_Centro");
 
-                    b.Property<int>("SchoolPeriodId")
+                    b.Property<int>("SchoolYearId")
                         .HasColumnType("int")
                         .HasColumnName("ID_PeriodoEscolar");
-
-                    b.Property<int?>("SchoolYearId")
-                        .HasColumnType("int");
 
                     b.Property<int>("Semester")
                         .HasColumnType("int")
@@ -406,7 +403,9 @@ namespace WebApplication.Migrations
                 {
                     b.HasOne("WebApplication.Data.SchoolYear", "SchoolYear")
                         .WithMany()
-                        .HasForeignKey("SchoolYearId");
+                        .HasForeignKey("SchoolYearId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("SchoolYear");
                 });

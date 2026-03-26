@@ -39,7 +39,7 @@ namespace WebApplication.Pages
                 if (teacher != null)
                 {
                     var currentSchoolYear = await _context.SchoolYears.FirstOrDefaultAsync(sy => sy.IsActive);
-                    Student.SchoolPeriodId = currentSchoolYear?.Id ?? 0;
+                    Student.SchoolYearId = currentSchoolYear?.Id ?? 0;
                     Student.SchoolId = teacher.SchoolId;
                     _context.Students.Add(Student);
 

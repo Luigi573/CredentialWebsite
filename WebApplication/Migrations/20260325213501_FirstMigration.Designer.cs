@@ -11,7 +11,7 @@ using WebApplication.Data;
 namespace WebApplication.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260305013322_FirstMigration")]
+    [Migration("20260325213501_FirstMigration")]
     partial class FirstMigration
     {
         /// <inheritdoc />
@@ -177,6 +177,35 @@ namespace WebApplication.Migrations
                     b.ToTable("Centros");
                 });
 
+            modelBuilder.Entity("WebApplication.Data.SchoolYear", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID_PeriodoEscolar");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("fechaFin");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("activo");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("nombre");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("fechaInicio");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CiclosEscolares");
+                });
+
             modelBuilder.Entity("WebApplication.Data.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -223,10 +252,9 @@ namespace WebApplication.Migrations
                         .HasColumnType("int")
                         .HasColumnName("ID_Centro");
 
-                    b.Property<string>("SchoolPeriod")
-                        .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("periodoEscolar");
+                    b.Property<int>("SchoolYearId")
+                        .HasColumnType("int")
+                        .HasColumnName("ID_PeriodoEscolar");
 
                     b.Property<int>("Semester")
                         .HasColumnType("int")
@@ -241,6 +269,8 @@ namespace WebApplication.Migrations
                         .HasColumnName("telefonoTutor");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SchoolYearId");
 
                     b.ToTable("Alumnos");
                 });
@@ -370,6 +400,17 @@ namespace WebApplication.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WebApplication.Data.Student", b =>
+                {
+                    b.HasOne("WebApplication.Data.SchoolYear", "SchoolYear")
+                        .WithMany()
+                        .HasForeignKey("SchoolYearId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SchoolYear");
                 });
 
             modelBuilder.Entity("WebApplication.Data.Teacher", b =>

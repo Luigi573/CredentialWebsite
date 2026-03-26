@@ -15,9 +15,9 @@ namespace WebApplication.Data
         [Display(Name = "Ciclo Escolar")]
         public string Name { get; set; } = String.Empty;
         [Column("fechaInicio")]
-        public DateOnly StartDate { get; set; }
+        public DateTime StartDate { get; set; }
         [Column("fechaFin")]
-        public DateOnly EndDate { get; set; }
+        public DateTime EndDate { get; set; }
         [Column("activo")]
         public bool IsActive { get; set; }
     }

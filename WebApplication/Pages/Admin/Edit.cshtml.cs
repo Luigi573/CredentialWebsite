@@ -46,22 +46,32 @@ namespace WebApplication.Pages.Admin
         {
             if (ModelState.IsValid)
             {
-                var result = await _userManager.UpdateAsync(Teacher);
+                var teacher = await _context.Users.FindAsync(Teacher.Id);
+                if (teacher != null)
+                {
+                    teacher.Name = Teacher.Name;
+                    teacher.Email = Teacher.Email;
+                    teacher.SchoolId = Teacher.SchoolId;
 
-                if (result.Succeeded)
-                {
-                    return RedirectToPage("./Admin/Index");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
+                    var result = await _userManager.UpdateAsync(teacher);
+
+                    if (result.Succeeded)
                     {
-                        ModelState.AddModelError(string.Empty, error.Description);
+                        return RedirectToPage("./Index");
                     }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
 
-                    PopulateSchools();
-                    return Page();
+                        PopulateSchools();
+                        return Page();
+                    }
                 }
+                
+                return NotFound();
             }
 
             return Page();

@@ -21,7 +21,7 @@ namespace WebApplication.Pages
         {
             if (id != null)
             {
-                var student = await _context.Students.FirstOrDefaultAsync(m => m.Id == id);
+                var student = await _context.Students.Include(s => s.SchoolYear).FirstOrDefaultAsync(m => m.Id == id);
 
                 if (student is not null)
                 {

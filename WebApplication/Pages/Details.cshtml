@@ -33,7 +33,7 @@
             @Html.DisplayNameFor(model => model.Student.SchoolYear)
         </dt>
         <dd class="col-sm-10">
-            @(Model.Student.SchoolYear?.Name)
+            @(Model.Student.SchoolYear?.Name ?? string.Empty)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Student.Semester)

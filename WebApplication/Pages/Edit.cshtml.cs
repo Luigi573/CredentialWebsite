@@ -44,57 +44,57 @@ namespace WebApplication.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return Page();
-            }
-
-            var student = await _context.Students.FindAsync(Student.Id);
-            if (student != null)
-            {
-                student.Name = Student.Name;
-                student.FamilyName = Student.FamilyName;
-                student.BloodType = Student.BloodType;
-                student.CURP = Student.CURP;
-                student.TutorName = Student.TutorName;
-                student.TutorPhone = Student.TutorPhone;
-                student.Semester = Student.Semester;
-
-
-                if (UploadedPhoto != null)
+                var student = await _context.Students.FindAsync(Student.Id);
+                if (student != null)
                 {
-                    var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos/upload");
-                    Directory.CreateDirectory(uploadPath);
+                    student.Name = Student.Name;
+                    student.FamilyName = Student.FamilyName;
+                    student.BloodType = Student.BloodType;
+                    student.CURP = Student.CURP;
+                    student.TutorName = Student.TutorName;
+                    student.TutorPhone = Student.TutorPhone;
+                    student.Semester = Student.Semester;
 
-                    //Delete existing photo if exists
-                    if (!string.IsNullOrEmpty(student.ProfilePictureUrl))
+
+                    if (UploadedPhoto != null)
                     {
-                        var existingFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", student.ProfilePictureUrl.TrimStart('/'));
-                        if (System.IO.File.Exists(existingFilePath))
+                        var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos/upload");
+                        Directory.CreateDirectory(uploadPath);
+
+                        //Delete existing photo if exists
+                        if (!string.IsNullOrEmpty(student.ProfilePictureUrl))
                         {
-                            System.IO.File.Delete(existingFilePath);
+                            var existingFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", student.ProfilePictureUrl.TrimStart('/'));
+                            if (System.IO.File.Exists(existingFilePath))
+                            {
+                                System.IO.File.Delete(existingFilePath);
+                            }
+
                         }
 
+                        var fileName = $"{Guid.NewGuid()}{Path.GetExtension(UploadedPhoto.FileName)}";
+                        var filePath = Path.Combine(uploadPath, fileName);
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await UploadedPhoto.CopyToAsync(stream);
+                        }
+
+                        student.ProfilePictureUrl = $"/photos/upload/{fileName}";
                     }
 
-                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(UploadedPhoto.FileName)}";
-                    var filePath = Path.Combine(uploadPath, fileName);
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await UploadedPhoto.CopyToAsync(stream);
-                    }
-
-                    student.ProfilePictureUrl = $"/photos/upload/{fileName}";
+                    await _context.SaveChangesAsync();
+                    return RedirectToPage("./Index");
                 }
+                else
+                {
+                    return NotFound();
+                }
+            }
 
-                await _context.SaveChangesAsync();
-                return RedirectToPage("./Index");
-            }
-            else
-            {
-                return NotFound();
-            }
+            return Page();
         }
     }
 }

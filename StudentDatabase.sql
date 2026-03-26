@@ -1,4 +1,4 @@
-DROP DATABASE credenciales;
+#DROP DATABASE credenciales;
 CREATE DATABASE credenciales;
 USE credenciales;
 
@@ -32,9 +32,21 @@ CREATE TABLE Centros(
     clave VARCHAR(10)
 );
 
+CREATE TABLE CiclosEscolares(
+	ID_CicloEscolar INT AUTO_INCREMENT,
+    PRIMARY KEY(IDCicloEscolar),
+    nombre VARCHAR(9) NOT NULL,
+    fechaInicio DATE,
+    fechaFin DATE,
+    activo BOOLEAN
+);
+
 ALTER TABLE Maestros ADD CONSTRAINT FK_IDCentro_Maestros FOREIGN KEY(ID_Centro) REFERENCES Centros(ID_Centro) ON DELETE CASCADE;
 ALTER TABLE Alumnos ADD CONSTRAINT FK_IDCentro_Alumnos FOREIGN KEY(ID_Centro) REFERENCES Centros(ID_Centro) ON DELETE CASCADE;
+ALTER TABLE Alumnos ADD CONSTRAINT FK_IDCiclosEscolares_Alumnos FOREIGN KEY(ID_CicloEscolar) REFERENCES CiclosEscolares ON DELETE SET NULL;
 
 INSERT INTO Centros(ID_Centro, nombre, clave) VALUES(1, "Telebachillerato Coacotla", "30ETH0224D");
 INSERT INTO Centros(ID_Centro, nombre, clave) VALUES(2, "Telebachillerato Nopalapan", "30ETH0204Q");
 INSERT INTO Centros(ID_Centro, nombre, clave) VALUES(3, "Telebachillerato Lealtad de Muñoz", "30ETH0204Q");
+
+INSERT INTO CiclosEscolares(ID_PeriodoEscolar, nombre, fechaInicio, fechaFin, activo) VALUES(1, "2025-2026", "2025-08-15 00:00:00", "2026-06-07 00:00:00", TRUE);
