@@ -22,13 +22,13 @@
         </div>
         @if (User.IsInRole("Admin"))
         {
-        <div class="col">
-            <label asp-for="Student.SchoolId" class="form-label"></label>
-            <select asp-for="Student.SchoolId" class="form-label"><option value="">--Seleccionar Centro--</option>
-                <option value="" disabled>--Seleccionar Centro--</option>
-            </select>
-            <span asp-validation-for="Student.SchoolId" class="text-danger"></span>
-        </div>
+            <div class="col">
+                <label asp-for="Student.SchoolId" class="form-label"></label>
+                <select asp-for="Student.SchoolId" class="form-control" asp-items="Model.Schools">
+                    <option value="" disabled selected>--Seleccionar Centro--</option>
+                </select>
+                <span asp-validation-for="Student.SchoolId" class="text-danger"></span>
+            </div>
         }
         <div class="col">
             <label asp-for="Student.Semester" class="form-label"></label>

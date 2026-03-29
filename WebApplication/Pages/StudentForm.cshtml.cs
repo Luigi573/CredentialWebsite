@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplication.Data;
 
@@ -12,6 +13,7 @@ namespace WebApplication.Pages
     {
         private readonly AppDbContext _context;
         private readonly UserManager<Teacher> _userManager;
+        public List<SelectListItem> Schools { get; set; } = new List<SelectListItem>();
 
         public StudentFormModel(AppDbContext context, UserManager<Teacher> userManager)
         {
@@ -21,6 +23,7 @@ namespace WebApplication.Pages
 
         public IActionResult OnGet()
         {
+            PopulateSchools();
             return Page();
         }
 
@@ -40,7 +43,12 @@ namespace WebApplication.Pages
                 {
                     var currentSchoolYear = await _context.SchoolYears.FirstOrDefaultAsync(sy => sy.IsActive);
                     Student.SchoolYearId = currentSchoolYear?.Id ?? 0;
-                    Student.SchoolId = teacher.SchoolId;
+
+                    if (!User.IsInRole("Admin"))
+                    {
+                        Student.SchoolId = teacher.SchoolId;
+                    }
+
                     _context.Students.Add(Student);
 
                     if (UploadedPhoto != null)
@@ -60,14 +68,24 @@ namespace WebApplication.Pages
                     }
 
                     await _context.SaveChangesAsync();
-
                     return RedirectToPage("./Index");
                 }
 
                 return Forbid();
             }
 
+            PopulateSchools();
             return Page();
+        }
+
+        private void PopulateSchools()
+        {
+            var schools = _context.Schools.ToList();
+            Schools = schools.Select(s => new SelectListItem
+            {
+                Value = s.Id.ToString(),
+                Text = s.Name
+            }).ToList();
         }
     }
 }
