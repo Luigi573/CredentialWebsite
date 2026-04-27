@@ -50,4 +50,3 @@ INSERT INTO Centros(ID_Centro, nombre, clave) VALUES(2, "Telebachillerato Nopala
 INSERT INTO Centros(ID_Centro, nombre, clave) VALUES(3, "Telebachillerato Lealtad de Muñoz", "30ETH0204Q");
 
 INSERT INTO CiclosEscolares(ID_PeriodoEscolar, nombre, fechaInicio, fechaFin, activo) VALUES(1, "2024-2025", "2024-08-15 00:00:00", "2025-06-01 00:00:00", TRUE);
-INSERT INTO CiclosEscolares(ID_PeriodoEscolar, nombre, fechaInicio, fechaFin, activo) VALUES(1, "2025-2026", "2025-08-15 00:00:00", "2026-06-01 00:00:00", TRUE);

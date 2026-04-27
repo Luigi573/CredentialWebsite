@@ -26,7 +26,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -45,19 +44,6 @@ using (var scope = app.Services.CreateScope())
         await roleManager.CreateAsync(new IdentityRole("Admin"));
     }
 
-    // Seed initial data
-    if (!context.Set<School>().Any())
-    {
-        context.Set<School>().Add(new School
-        {
-            Id = 1,
-            Name = "Telebachillerato Coacotla",
-            Code = "30ETH0224D"
-        });
-
-        await context.SaveChangesAsync();
-    }
-
     // Seed admin user
     var adminEmail = "xavier.arian@gmail.com";
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
@@ -72,7 +58,7 @@ using (var scope = app.Services.CreateScope())
             EmailConfirmed = true
         };
 
-        var adminPassword = "Luigi573*"; // change this ASAP in production
+        var adminPassword = "ChangeMe123*"; // change this ASAP in production
         var result = await userManager.CreateAsync(user, adminPassword);
 
         if (result.Succeeded)

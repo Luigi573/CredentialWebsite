@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- https://go.microsoft.com/fwlink/?LinkID=208121. -->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\Users\lisre\Documents\GitHub\CredentialWebsite\WebApplication\bin\Release\net10.0\publish\</_PublishTargetUrl>
+    <History>True|2026-04-26T20:42:20.5548239Z||;True|2026-04-26T13:12:45.1813667-06:00||;</History>
+    <LastFailureDetails />
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Server=db49663.databaseasp.net%3b Database=db49663%3b Uid=db49663%3b Pwd=6p-Tq%25Z87i_R%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>
