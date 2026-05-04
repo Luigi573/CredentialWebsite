@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NuGet.DependencyResolver;
 using WebApplication.Data;
 
 namespace WebApplication.Pages
@@ -12,11 +14,14 @@ namespace WebApplication.Pages
     {
         private readonly AppDbContext _context;
         private readonly UserManager<Teacher> _userManager;
+        private readonly IWebHostEnvironment _environment;
+        public List<SelectListItem> Schools { get; set; } = new List<SelectListItem>();
 
-        public EditModel(AppDbContext context, UserManager<Teacher> userManager)
+        public EditModel(AppDbContext context, UserManager<Teacher> userManager, IWebHostEnvironment environment)
         {
             _context = context;
             _userManager = userManager;
+            _environment = environment;
         }
 
         [BindProperty]
@@ -33,6 +38,8 @@ namespace WebApplication.Pages
                 if (student != null)
                 {
                     Student = student;
+
+                    PopulateSchools();
                     return Page(); 
                 }
 
@@ -47,6 +54,7 @@ namespace WebApplication.Pages
             if (ModelState.IsValid)
             {
                 var student = await _context.Students.FindAsync(Student.Id);
+
                 if (student != null)
                 {
                     student.Name = Student.Name;
@@ -57,16 +65,24 @@ namespace WebApplication.Pages
                     student.TutorPhone = Student.TutorPhone;
                     student.Semester = Student.Semester;
 
+                    if (User.IsInRole("Admin"))
+                    {
+                        student.SchoolId = Student.SchoolId;
+                    }
+
+                    student.ProfilePictureUrl = Student.ProfilePictureUrl;
+
 
                     if (UploadedPhoto != null)
                     {
-                        var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos/upload");
+                        var uploadPath = Path.Combine(_environment.WebRootPath, "photos", "upload");
                         Directory.CreateDirectory(uploadPath);
 
                         //Delete existing photo if exists
                         if (!string.IsNullOrEmpty(student.ProfilePictureUrl))
                         {
-                            var existingFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", student.ProfilePictureUrl.TrimStart('/'));
+                            var existingFilePath = Path.Combine(_environment.WebRootPath, student.ProfilePictureUrl.TrimStart('/'));
+
                             if (System.IO.File.Exists(existingFilePath))
                             {
                                 System.IO.File.Delete(existingFilePath);
@@ -94,7 +110,17 @@ namespace WebApplication.Pages
                 }
             }
 
+            PopulateSchools();
             return Page();
+        }
+        private void PopulateSchools()
+        {
+            var schools = _context.Schools.ToList();
+            Schools = schools.Select(s => new SelectListItem
+            {
+                Value = s.Id.ToString(),
+                Text = s.Name
+            }).ToList();
         }
     }
 }

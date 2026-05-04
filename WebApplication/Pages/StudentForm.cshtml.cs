@@ -13,12 +13,14 @@ namespace WebApplication.Pages
     {
         private readonly AppDbContext _context;
         private readonly UserManager<Teacher> _userManager;
+        private readonly IWebHostEnvironment _environment;
         public List<SelectListItem> Schools { get; set; } = new List<SelectListItem>();
 
-        public StudentFormModel(AppDbContext context, UserManager<Teacher> userManager)
+        public StudentFormModel(AppDbContext context, UserManager<Teacher> userManager, IWebHostEnvironment environment)
         {
             _context = context;
             _userManager = userManager;
+            _environment = environment;
         }
 
         public IActionResult OnGet()
@@ -36,7 +38,6 @@ namespace WebApplication.Pages
         {
             if (ModelState.IsValid)
             {
-
                 var teacher = await _userManager.GetUserAsync(User);
 
                 if (teacher != null)
@@ -49,11 +50,9 @@ namespace WebApplication.Pages
                         Student.SchoolId = teacher.SchoolId;
                     }
 
-                    _context.Students.Add(Student);
-
                     if (UploadedPhoto != null)
                     {
-                        var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos/upload");
+                        var uploadPath = Path.Combine(_environment.WebRootPath, "photos", "upload");
                         Directory.CreateDirectory(uploadPath);
 
                         var fileName = $"{Guid.NewGuid()}{Path.GetExtension(UploadedPhoto.FileName)}";
@@ -67,6 +66,7 @@ namespace WebApplication.Pages
                         Student.ProfilePictureUrl = $"/photos/upload/{fileName}";
                     }
 
+                    _context.Students.Add(Student);
                     await _context.SaveChangesAsync();
                     return RedirectToPage("./Index");
                 }

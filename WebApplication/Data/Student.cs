@@ -12,7 +12,7 @@ namespace WebApplication.Data
         public int Id { get; set; }
         [Required][Display(Name="Escuela")]
         [Column("ID_Centro")]
-        public int? SchoolId { get; set; }
+        public int SchoolId { get; set; }
         public School? School { get; set; }
         [Required][Display(Name = "Nombre(s)")]
         [Column("nombres", TypeName = "NVARCHAR(50)")]

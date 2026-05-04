@@ -4,6 +4,8 @@ using MySql.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace WebApplication.Migrations
 {
     /// <inheritdoc />
@@ -124,7 +126,7 @@ namespace WebApplication.Migrations
                 {
                     ID_Alumno = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    ID_Centro = table.Column<int>(type: "int", nullable: true),
+                    ID_Centro = table.Column<int>(type: "int", nullable: false),
                     nombres = table.Column<string>(type: "NVARCHAR(50)", maxLength: 50, nullable: false),
                     apellidos = table.Column<string>(type: "NVARCHAR(50)", maxLength: 50, nullable: false),
                     curp = table.Column<string>(type: "varchar(18)", maxLength: 18, nullable: false),
@@ -140,6 +142,12 @@ namespace WebApplication.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Alumnos", x => x.ID_Alumno);
+                    table.ForeignKey(
+                        name: "FK_Alumnos_Centros_ID_Centro",
+                        column: x => x.ID_Centro,
+                        principalTable: "Centros",
+                        principalColumn: "ID_Centro",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Alumnos_CiclosEscolares_ID_PeriodoEscolar",
                         column: x => x.ID_PeriodoEscolar,
@@ -237,6 +245,27 @@ namespace WebApplication.Migrations
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.InsertData(
+                table: "Centros",
+                columns: new[] { "ID_Centro", "clave", "nombre" },
+                values: new object[,]
+                {
+                    { 1, "30ETH0224D", "Telebachillerato Coacotla" },
+                    { 2, "30ETH0206O", "Telebachillerato Nopalapan" },
+                    { 3, "30ETH0472L", "Telebachillerato Lealtad de Muñoz" },
+                    { 4, "30ETH0134L", "Telebachillerato Isla" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "CiclosEscolares",
+                columns: new[] { "ID_PeriodoEscolar", "fechaFin", "activo", "nombre", "fechaInicio" },
+                values: new object[] { 1, new DateTime(2025, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), true, "2024-2025", new DateTime(2024, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Alumnos_ID_Centro",
+                table: "Alumnos",
+                column: "ID_Centro");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Alumnos_ID_PeriodoEscolar",

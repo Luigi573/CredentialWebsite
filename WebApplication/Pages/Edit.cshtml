@@ -27,6 +27,16 @@
             <input asp-for="Student.CURP" class="form-control" />
             <span asp-validation-for="Student.CURP" class="text-danger"></span>
         </div>
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="col">
+                <label asp-for="Student.SchoolId" class="form-label"></label>
+                <select asp-for="Student.SchoolId" class="form-control" asp-items="Model.Schools">
+                    <option value="" disabled selected>--Seleccionar Centro--</option>
+                </select>
+                <span asp-validation-for="Student.SchoolId" class="text-danger"></span>
+            </div>
+        }
         <div class="col">
             <label asp-for="Student.Semester" class="form-label"></label>
             <select asp-for="Student.Semester" class="form-control">
