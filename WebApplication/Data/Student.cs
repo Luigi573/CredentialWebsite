@@ -36,7 +36,6 @@ namespace WebApplication.Data
         [Column("activo")]
         public bool IsActive { get; set; } = true;
         [Column("nss")]
-        [StringLength(11, MinimumLength = 11, ErrorMessage = "El NSS debe tener 11 caracteres.")]
         public string? NSS { get; set; }
         [Display(Name = "Tipo de Sangre")]
         [Column("tipoSangre")]
@@ -47,7 +46,7 @@ namespace WebApplication.Data
         public string? TutorName { get; set; }
         [Display(Name = "Teléfono Tutor")]
         [Column("telefonoTutor")]
-        [RegularExpression(@"^\d{3}-\d{3}-\d{4}$", ErrorMessage = "Ejemplo: 945-845-3245")]
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Ejemplo: 9458453245")]
         public string? TutorPhone { get; set; }
         [Display(Name = "Foto de perfil")]
         [Column("imagen")]

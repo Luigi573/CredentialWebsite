@@ -5,8 +5,6 @@
 <form method="post" enctype="multipart/form-data">
     <div class="form-group row row-cols-3 align-items-center">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="Student.Id" />
-
         <div class="col">
             <label asp-for="Student.Name" class="form-label"></label>
             <input asp-for="Student.Name" class="form-control" />
@@ -65,8 +63,8 @@
     </div>
     <div class="row mx-auto mt-3 w-25 h-25">
         <img src="/photos/placeholder.png" id="photo_preview" class="img-thumbnail mb-2" />
-        <input type="file" name="UploadedPhoto" id="photo_uploader" accept=".png, .jpg" />
-        <button id="submit_button" class="btn btn-primary mt-3" type="submit">Submit</button>
+        <input type="file" name="UploadedPhoto" id="photo_uploader" accept=".png, .jpg"  />
+        <button id="submit_button" class="btn btn-primary mt-3" type="submit">Registrar estudiante</button>
     </div>
 </form>
 
