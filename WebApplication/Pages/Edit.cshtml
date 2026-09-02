@@ -48,6 +48,16 @@
             <span asp-validation-for="Student.Semester" class="text-danger"></span>
         </div>
         <div class="col">
+            <label asp-for="Student.Group" class="form-label"></label>
+            <select asp-for="Student.Group" class="form-control">
+                <option value="" disabled selected>--Seleccionar Grupo--</option>
+                <option value="A">Grupo A</option>
+                <option value="B">Grupo B</option>
+                <option value="C">Grupo C</option>
+            </select>
+            <span asp-validation-for="Student.Group" class="text-danger"></span>
+        </div>
+        <div class="col">
             <label asp-for="Student.NSS" class="form-label"></label>
             <input asp-for="Student.NSS" class="form-control" />
             <span asp-validation-for="Student.NSS" class="text-danger"></span>

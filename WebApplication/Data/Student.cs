@@ -10,49 +10,72 @@ namespace WebApplication.Data
         [Column("ID_Alumno")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required][Display(Name="Escuela")]
+
+        [Required]
+        [Display(Name="Escuela")]
         [Column("ID_Centro")]
         public int SchoolId { get; set; }
+
         public School? School { get; set; }
-        [Required][Display(Name = "Nombre(s)")]
+
+        [Required]
+        [Display(Name = "Nombre(s)")]
         [Column("nombres", TypeName = "NVARCHAR(50)")]
         [MinLength(5, ErrorMessage = "El nombre debe tener al menos 5 caracteres.")]
         [MaxLength(50, ErrorMessage = "El nombre no puede exceder los 50 caracteres.")]
         public string Name { get; set; } = String.Empty;
-        [Required][Display(Name = "Apellidos")]
+
+        [Required]
+        [Display(Name = "Apellidos")]
         [Column("apellidos", TypeName = "NVARCHAR(50)")]
         [MinLength(5, ErrorMessage = "El nombre debe tener al menos 5 caracteres.")]
         [MaxLength(50, ErrorMessage = "El nombre no puede exceder los 50 caracteres.")]
         public string FamilyName { get; set; } = String.Empty;
+
         [Required]
         [Column("curp")]
         [StringLength(18, MinimumLength = 18, ErrorMessage = "La CURP debe tener 18 caracteres.")]
         public string CURP { get; set; } = String.Empty;
-        [Required] [Display(Name = "Semestre")]
+
+        [Required] 
+        [Display(Name = "Semestre")]
         [Column("semestre")]
         [Range(1, 6, ErrorMessage = "Seleccione un semestre válido")]
         public int Semester { get; set; }
+
+        [Required]
+        [Display(Name = "Grupo")]
+        [Column("grupo")]
+        public char Group { get; set; }
+
         [Display(Name = "Activo")]
         [Column("activo")]
         public bool IsActive { get; set; } = true;
+
         [Column("nss")]
         public string? NSS { get; set; }
+
         [Display(Name = "Tipo de Sangre")]
         [Column("tipoSangre")]
         [RegularExpression(@"^(?:A|B|AB|O)[+-]$", ErrorMessage = "Tipo de sangre no válido. Ejemplo: 'A+'")]
         public string? BloodType { get; set; }
+
         [Display(Name = "Tutor")]
         [Column("tutor")]
         public string? TutorName { get; set; }
+
         [Display(Name = "Teléfono Tutor")]
         [Column("telefonoTutor")]
         [RegularExpression(@"^\d{10}$", ErrorMessage = "Ejemplo: 9458453245")]
         public string? TutorPhone { get; set; }
+
         [Display(Name = "Foto de perfil")]
         [Column("imagen")]
         public string? ProfilePictureUrl { get; set; }
+
         [Column("ID_PeriodoEscolar")]
         public int SchoolYearId { get; set; }
+
         [Display(Name = "Ciclo Escolar")]
         public SchoolYear? SchoolYear { get; set; }
     }

@@ -64,14 +64,12 @@ namespace WebApplication.Pages
                     student.TutorName = Student.TutorName;
                     student.TutorPhone = Student.TutorPhone;
                     student.Semester = Student.Semester;
+                    student.Group = Student.Group;
 
                     if (User.IsInRole("Admin"))
                     {
                         student.SchoolId = Student.SchoolId;
                     }
-
-                    student.ProfilePictureUrl = Student.ProfilePictureUrl;
-
 
                     if (UploadedPhoto != null)
                     {
